@@ -7,6 +7,7 @@ import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
 import { isValidObjectId, Model } from 'mongoose';
 import { error } from 'console';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 
 @Injectable()
@@ -40,8 +41,16 @@ export class PokemonService {
 
   }
   //paginacion
-  findAll() {
-    return `This action returns all pokemon`;
+  findAll(paginationDto: PaginationDto) {
+    // esto para establecer defenicido limite de 10 y que se despliguye en pagina 0
+    const { limit = 10, offset = 0 } = paginationDto;
+
+    return this.pokemonModel.find()
+      .skip(offset)
+      .limit(limit)
+      .sort({ numeroPokemon: 1 }) // ordena por numero de pokemon
+      .select('-__v'); // excluye el campo __v
+
   }
 
   async findOne(term: string) {
