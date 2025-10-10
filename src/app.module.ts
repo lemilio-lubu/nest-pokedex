@@ -1,4 +1,4 @@
-import { join } from 'path/win32'; // paquete de node
+import { join } from 'path'; // paquete de node
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
