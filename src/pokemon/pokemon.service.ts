@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ConfigService } from '@nestjs/config';
 
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
@@ -12,14 +13,21 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class PokemonService {
-  //rivate readonly pokemons : Pokemon[] = [];
+  //private readonly pokemons : Pokemon[] = [];
+  
+  private defaultLimit: number;
   constructor(
     // inyecta el modelo de mongoose
     // el name debe ser igual al que se definio en el modulo
     @InjectModel(Pokemon.name)
     // el tipo de dato es Model de mongoose
     private readonly pokemonModel: Model<Pokemon>,
-  ) { }
+    private readonly configService: ConfigService,
+  ) { 
+
+    this.defaultLimit = this.configService.get<number>('limitResults')!;
+
+  }
 
   // el metodo create es asincrono
   // el dto es un objeto que contiene los datos para crear un pokemon
@@ -43,7 +51,7 @@ export class PokemonService {
   //paginacion
   findAll(paginationDto: PaginationDto) {
     // esto para establecer defenicido limite de 10 y que se despliguye en pagina 0
-    const { limit = 10, offset = 0 } = paginationDto;
+    const { limit = this.defaultLimit, offset = 0 } = paginationDto;
 
     return this.pokemonModel.find()
       .skip(offset)
