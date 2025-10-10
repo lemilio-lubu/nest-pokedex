@@ -24,7 +24,9 @@ import { JoiValidationSchema } from './config/joi.validation';
       rootPath: join(__dirname, '..', 'public'),
     }),
     // esto es importante para conectar con mongo en espcial el url
-    MongooseModule.forRoot( process.env.MONGODB! ),
+    MongooseModule.forRoot( process.env.MONGODB!, {
+      dbName: 'pokedex' // nombre de la base de datos
+    } ),
 
     PokemonModule,
 
