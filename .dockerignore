@@ -1,0 +1,7 @@
+# me permite ignorar archivos y carpetas que no quiero que se suban al contenedor de docker
+# node_modules es una carpeta que se genera al instalar las dependencias
+dist/
+node_modules/
+.gitignore
+.env
+.git/

@@ -6,6 +6,6 @@
 export const AppConfiguration = () => ({
     enviroment: process.env.NODE_ENV || 'dev',
     mongodb: process.env.MONGODB,
-    port: process.env.PORT || 3000,
+    port: process.env.PORT || 3002,
     limitResults: +(process.env.LIMIT_RESULTS ?? 5),
 });
